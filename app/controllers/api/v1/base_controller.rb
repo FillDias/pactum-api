@@ -1,0 +1,39 @@
+module Api
+  module V1
+    class BaseController < ApplicationController
+      before_action :authenticate_request
+
+      private
+
+      def authenticate_request
+        token = request.headers["Authorization"]&.split(" ")&.last
+        return render_unauthorized unless token
+
+        begin
+          payload = JWT.decode(
+            token,
+            ENV.fetch("JWT_SECRET"),
+            true,
+            algorithm: "HS256"
+          ).first
+
+          @current_user_id = payload["user_id"]
+        rescue JWT::DecodeError
+          render_unauthorized
+        end
+      end
+
+      def render_unauthorized
+        render json: { error: "Nao autorizado" }, status: :unauthorized
+      end
+
+      def render_error(message, status = :unprocessable_entity)
+        render json: { error: message }, status: status
+      end
+
+      def render_success(data, status = :ok)
+        render json: data, status: status
+      end
+    end
+  end
+end
