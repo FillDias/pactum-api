@@ -15,6 +15,7 @@ class LancamentoService
   def self.criar(user, params)
     lancamento = Lancamento.new(
       user_id: user.id,
+      casal_id: user.casal_id,
       familia_id: user.familia_id,
       descricao: params[:descricao],
       valor: params[:valor],

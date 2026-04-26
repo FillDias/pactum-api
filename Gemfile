@@ -20,3 +20,7 @@ end
 group :development do
   gem "annotate"
 end
+
+group :production do
+  gem "rack-timeout"
+end
