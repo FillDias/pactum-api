@@ -2,10 +2,11 @@ module Api
   module V1
     class LancamentosController < BaseController
       def index
-        mes = params[:mes]&.to_i || Time.current.month
-        ano = params[:ano]&.to_i || Time.current.year
+        mes       = params[:mes]&.to_i || Time.current.month
+        ano       = params[:ano]&.to_i || Time.current.year
+        categoria = params[:categoria].presence
 
-        lancamentos = LancamentoService.listar(current_user, mes, ano)
+        lancamentos = LancamentoService.listar(current_user, mes, ano, categoria: categoria)
         render_success({ lancamentos: lancamentos })
       end
 
