@@ -1,15 +1,11 @@
 class LancamentoService
-  def self.listar(user, mes, ano)
+  def self.listar(user, mes, ano, categoria: nil)
     familia = user.familia
+    ids = familia ? FamiliaService.membros_ids(familia) : [user.id]
 
-    if familia
-      ids = FamiliaService.membros_ids(familia)
-      Lancamento.where(user_id: ids, mes: mes, ano: ano)
-                .order(created_at: :desc)
-    else
-      Lancamento.where(user_id: user.id, mes: mes, ano: ano)
-                .order(created_at: :desc)
-    end
+    scope = Lancamento.where(user_id: ids, mes: mes, ano: ano)
+    scope = scope.where(categoria: categoria) if categoria.present?
+    scope.order(created_at: :desc)
   end
 
   def self.criar(user, params)
