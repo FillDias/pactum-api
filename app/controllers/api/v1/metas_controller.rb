@@ -2,38 +2,26 @@ module Api
   module V1
     class MetasController < BaseController
       def index
-        casal = current_user.casal
-        return render_error("Casal nao encontrado", :not_found) unless casal
-
-        metas = MetaService.listar(casal.id)
+        metas = MetaService.listar(current_user)
         render_success({ metas: metas })
       end
 
       def create
-        casal = current_user.casal
-        return render_error("Casal nao encontrado", :not_found) unless casal
-
-        result = MetaService.criar(casal.id, meta_params)
+        result = MetaService.criar(current_user, meta_params)
         return render_error(result[:error]) if result[:error]
 
         render_success({ meta: result[:meta] }, :created)
       end
 
       def update
-        casal = current_user.casal
-        return render_error("Casal nao encontrado", :not_found) unless casal
-
-        result = MetaService.atualizar(params[:id], casal.id, meta_params)
+        result = MetaService.atualizar(params[:id], current_user, meta_params)
         return render_error(result[:error]) if result[:error]
 
         render_success({ meta: result[:meta] })
       end
 
       def destroy
-        casal = current_user.casal
-        return render_error("Casal nao encontrado", :not_found) unless casal
-
-        result = MetaService.deletar(params[:id], casal.id)
+        result = MetaService.deletar(params[:id], current_user)
         return render_error(result[:error]) if result[:error]
 
         render_success({ message: "Meta removida" })

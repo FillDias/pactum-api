@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      post "auth/register", to: "auth#register"
-      post "auth/login",    to: "auth#login"
-      delete "auth/logout", to: "auth#logout"
+      post "auth/register",        to: "auth#register"
+      post "auth/login",           to: "auth#login"
+      post "auth/refresh",         to: "auth#refresh"
+      post "auth/forgot_password", to: "auth#forgot_password"
+      post "auth/reset_password",  to: "auth#reset_password"
+      get  "auth/verify_email",    to: "auth#verify_email"
+      delete "auth/logout",        to: "auth#logout"
 
       resource :perfil, only: [:show, :update]
 
@@ -16,7 +20,6 @@ Rails.application.routes.draw do
       end
 
       resources :lancamentos,   only: [:index, :create, :update, :destroy]
-      resources :receitas,      only: [:index, :create, :update, :destroy]
       resources :investimentos,  only: [:index, :create, :update, :destroy]
       resources :mensagens,     only: [:index, :create]
       resources :metas,         only: [:index, :create, :update, :destroy]
