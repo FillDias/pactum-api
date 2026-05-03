@@ -1,5 +1,6 @@
 class Meta < ApplicationRecord
-  belongs_to :casal
+  belongs_to :familia, optional: true
+  belongs_to :user, optional: true
 
   validates :titulo, presence: true
   validates :valor_alvo, numericality: { greater_than: 0 }, allow_nil: true

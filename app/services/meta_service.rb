@@ -1,11 +1,18 @@
 class MetaService
-  def self.listar(casal_id)
-    Meta.where(casal_id: casal_id).order(created_at: :desc)
+  def self.listar(user)
+    familia = user.familia
+    if familia
+      Meta.where(familia_id: familia.id).order(created_at: :desc)
+    else
+      Meta.where(user_id: user.id).order(created_at: :desc)
+    end
   end
 
-  def self.criar(casal_id, params)
+  def self.criar(user, params)
+    familia = user.familia
     meta = Meta.create(
-      casal_id: casal_id,
+      familia_id: familia&.id,
+      user_id: user.id,
       titulo: params[:titulo],
       valor_alvo: params[:valor_alvo],
       valor_atual: params[:valor_atual] || 0,
@@ -17,8 +24,9 @@ class MetaService
     { meta: meta }
   end
 
-  def self.atualizar(id, casal_id, params)
-    meta = Meta.find_by(id: id, casal_id: casal_id)
+  def self.atualizar(id, user, params)
+    familia = user.familia
+    meta = familia ? Meta.find_by(id: id, familia_id: familia.id) : Meta.find_by(id: id, user_id: user.id)
     return { error: "Meta nao encontrada" } unless meta
 
     return { error: meta.errors.full_messages.first } unless meta.update(params)
@@ -26,8 +34,9 @@ class MetaService
     { meta: meta }
   end
 
-  def self.deletar(id, casal_id)
-    meta = Meta.find_by(id: id, casal_id: casal_id)
+  def self.deletar(id, user)
+    familia = user.familia
+    meta = familia ? Meta.find_by(id: id, familia_id: familia.id) : Meta.find_by(id: id, user_id: user.id)
     return { error: "Meta nao encontrada" } unless meta
 
     meta.destroy
