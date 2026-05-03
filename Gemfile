@@ -12,6 +12,8 @@ gem "rack-attack"
 gem "active_model_serializers", "~> 0.10.0"
 gem "redis", "~> 5.0"
 gem "sidekiq", "~> 7.0"
+gem "connection_pool", "~> 2.5"
+gem "bootsnap", require: false
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
