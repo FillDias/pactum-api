@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: pactum_api_production
-  username: pactum_api
-  password: <%= ENV["PACTUM_API_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
