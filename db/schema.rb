@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_26_044240) do
+ActiveRecord::Schema[7.2].define(version: 2026_05_03_145921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -88,14 +88,18 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_26_044240) do
   end
 
   create_table "metas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "casal_id", null: false
+    t.uuid "casal_id"
     t.string "titulo", null: false
     t.decimal "valor_alvo", precision: 10, scale: 2
     t.decimal "valor_atual", precision: 10, scale: 2, default: "0.0"
     t.date "prazo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "familia_id"
+    t.integer "user_id"
     t.index ["casal_id"], name: "index_metas_on_casal_id"
+    t.index ["familia_id"], name: "index_metas_on_familia_id"
+    t.index ["user_id"], name: "index_metas_on_user_id"
   end
 
   create_table "receitas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -120,6 +124,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_26_044240) do
     t.uuid "casal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "email_verified_at"
+    t.string "email_verification_token"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email_verification_token"], name: "index_users_on_email_verification_token", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 end
