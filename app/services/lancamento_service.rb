@@ -1,7 +1,11 @@
 class LancamentoService
-  def self.listar(user, mes, ano, categoria: nil)
+  def self.listar(user, mes, ano, categoria: nil, escopo: nil)
     familia = user.familia
-    ids = familia ? FamiliaService.membros_ids(familia) : [user.id]
+    ids = if escopo == "eu" || familia.nil?
+      [user.id]
+    else
+      FamiliaService.membros_ids(familia)
+    end
 
     scope = Lancamento.where(user_id: ids, mes: mes, ano: ano)
     scope = scope.where(categoria: categoria) if categoria.present?

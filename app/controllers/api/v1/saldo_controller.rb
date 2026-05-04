@@ -2,10 +2,11 @@ module Api
   module V1
     class SaldoController < BaseController
       def index
-        mes = params[:mes]&.to_i || Time.current.month
-        ano = params[:ano]&.to_i || Time.current.year
+        mes    = params[:mes]&.to_i || Time.current.month
+        ano    = params[:ano]&.to_i || Time.current.year
+        escopo = params[:escopo].presence
 
-        saldo = SaldoService.calcular(current_user, mes, ano)
+        saldo = SaldoService.calcular(current_user, mes, ano, escopo: escopo)
         render_success({ saldo: saldo })
       end
 

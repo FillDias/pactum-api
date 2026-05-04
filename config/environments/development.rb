@@ -28,9 +28,6 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
-
   # Em dev: emails aparecem no log do Rails (sem precisar de SMTP)
   config.action_mailer.delivery_method = :logger
   config.action_mailer.raise_delivery_errors = false

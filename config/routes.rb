@@ -11,7 +11,9 @@ Rails.application.routes.draw do
 
       resource :perfil, only: [:show, :update]
 
-      get "familias/atual", to: "familias#atual"
+      get  "familias/atual",  to: "familias#atual"
+      get  "familias/codigo", to: "familias#codigo"
+      post "familias/entrar", to: "familias#entrar"
 
       resources :familias, only: [:create, :show] do
         member do
