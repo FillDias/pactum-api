@@ -12,7 +12,7 @@ gem "rack-attack"
 gem "active_model_serializers", "~> 0.10.0"
 gem "redis", "~> 5.0"
 gem "sidekiq", "~> 7.0"
-gem "connection_pool", "~> 2.5"
+gem "connection_pool", "~> 3.0"
 gem "bootsnap", require: false
 
 group :development, :test do
