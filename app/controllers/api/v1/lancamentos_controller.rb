@@ -5,8 +5,9 @@ module Api
         mes       = params[:mes]&.to_i || Time.current.month
         ano       = params[:ano]&.to_i || Time.current.year
         categoria = params[:categoria].presence
+        escopo    = params[:escopo].presence
 
-        lancamentos = LancamentoService.listar(current_user, mes, ano, categoria: categoria)
+        lancamentos = LancamentoService.listar(current_user, mes, ano, categoria: categoria, escopo: escopo)
         render_success({ lancamentos: lancamentos })
       end
 

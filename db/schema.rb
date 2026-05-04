@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_05_03_145921) do
+ActiveRecord::Schema[7.2].define(version: 2026_05_03_200000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_03_145921) do
     t.uuid "criado_por", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "codigo_convite"
+    t.index ["codigo_convite"], name: "index_familias_on_codigo_convite", unique: true
   end
 
   create_table "investimentos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
