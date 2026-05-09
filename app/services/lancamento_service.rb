@@ -1,5 +1,5 @@
 class LancamentoService
-  def self.listar(user, mes, ano, categoria: nil, escopo: nil)
+  def self.listar(user, mes, ano, categoria: nil, escopo: nil, tipo: nil)
     familia = user.familia
     ids = if escopo == "eu" || familia.nil?
       [user.id]
@@ -9,6 +9,7 @@ class LancamentoService
 
     scope = Lancamento.where(user_id: ids, mes: mes, ano: ano)
     scope = scope.where(categoria: categoria) if categoria.present?
+    scope = scope.where(tipo: tipo) if tipo.present?
     scope.order(created_at: :desc)
   end
 
