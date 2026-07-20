@@ -49,10 +49,6 @@ module Api
 
       private
 
-      def current_user
-        @current_user ||= User.find(@current_user_id)
-      end
-
       def familia_json(familia)
         eh_dono = FamiliaService.dono?(familia, current_user)
         membros = FamiliaMembro.includes(:user).where(familia_id: familia.id)

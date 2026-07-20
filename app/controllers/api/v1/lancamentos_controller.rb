@@ -38,10 +38,6 @@ module Api
 
       private
 
-      def current_user
-        @current_user ||= User.find(@current_user_id)
-      end
-
       def lancamento_params
         params.permit(
           :descricao, :valor, :tipo, :categoria,
