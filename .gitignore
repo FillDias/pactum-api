@@ -32,3 +32,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Claude / AI tools
+.agents/
+.claude/
+skills-lock.json
