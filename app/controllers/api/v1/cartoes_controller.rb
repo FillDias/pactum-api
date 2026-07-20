@@ -40,7 +40,7 @@ module Api
       private
 
       def cartao_params
-        params.permit(:apelido, :operadora, :limite)
+        params.permit(:apelido, :operadora, :limite, :dia_vencimento)
       end
     end
   end

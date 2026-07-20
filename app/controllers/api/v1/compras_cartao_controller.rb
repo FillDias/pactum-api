@@ -21,6 +21,13 @@ module Api
         render_success({ compra_cartao: result[:compra_cartao] })
       end
 
+      def destroy
+        result = CompraCartaoService.deletar(params[:id], current_user.id)
+        return render_error(result[:error]) if result[:error]
+
+        render_success({ message: "Compra removida" })
+      end
+
       def cancelar
         result = CompraCartaoService.cancelar(params[:id], current_user.id)
         return render_error(result[:error]) if result[:error]

@@ -28,6 +28,19 @@ class CompraCartaoService
     { compra_cartao: compra }
   end
 
+  def self.deletar(id, user_id)
+    compra = CompraCartao.find_by(id: id, user_id: user_id)
+    return { error: "CompraCartao nao encontrada" } unless compra
+
+    ActiveRecord::Base.transaction do
+      Lancamento.where(compra_cartao_id: compra.id).destroy_all
+      compra.destroy!
+    end
+    { success: true }
+  rescue => e
+    { error: e.message }
+  end
+
   def self.cancelar(id, user_id)
     compra = CompraCartao.find_by(id: id, user_id: user_id)
     return { error: "CompraCartao nao encontrada" } unless compra

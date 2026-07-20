@@ -31,7 +31,7 @@ Rails.application.routes.draw do
           get :comprometido_futuro
         end
       end
-      resources :compras_cartao, only: [:index, :create, :update] do
+      resources :compras_cartao, only: [:index, :create, :update, :destroy] do
         member do
           post :cancelar
         end
