@@ -26,6 +26,17 @@ Rails.application.routes.draw do
       resources :mensagens,     only: [:index, :create]
       resources :metas,         only: [:index, :create, :update, :destroy]
 
+      resources :cartoes, only: [:index, :create, :update, :destroy] do
+        collection do
+          get :comprometido_futuro
+        end
+      end
+      resources :compras_cartao, only: [:index, :create, :update] do
+        member do
+          post :cancelar
+        end
+      end
+
       get "saldo", to: "saldo#index"
     end
   end

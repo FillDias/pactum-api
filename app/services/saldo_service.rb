@@ -7,6 +7,8 @@ class SaldoService
       FamiliaService.membros_ids(familia)
     end
 
+    CompraCartaoService.materializar_parcelas_do_mes!(ids, mes, ano)
+
     total_receitas_tabela = Receita
       .where(user_id: ids, mes: mes, ano: ano)
       .sum(:valor)

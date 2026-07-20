@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_05_03_200000) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_19_201142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "cartoes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "familia_id"
+    t.string "apelido"
+    t.string "operadora", null: false
+    t.decimal "limite", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["familia_id"], name: "index_cartoes_on_familia_id"
+    t.index ["user_id"], name: "index_cartoes_on_user_id"
+  end
 
   create_table "casais", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "nome", default: "Pactum"
@@ -21,6 +33,22 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_03_200000) do
     t.uuid "usuario2_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "compras_cartao", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "familia_id"
+    t.uuid "cartao_id", null: false
+    t.string "descricao", null: false
+    t.decimal "valor_total", precision: 10, scale: 2, null: false
+    t.integer "numero_parcelas", null: false
+    t.integer "mes_referencia", null: false
+    t.integer "ano_referencia", null: false
+    t.datetime "cancelada_em"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cartao_id"], name: "index_compras_cartao_on_cartao_id"
+    t.index ["user_id"], name: "index_compras_cartao_on_user_id"
   end
 
   create_table "familia_membros", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -71,8 +99,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_03_200000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "familia_id"
+    t.uuid "compra_cartao_id"
+    t.integer "numero_parcela"
     t.index ["casal_id", "mes", "ano"], name: "index_lancamentos_on_casal_id_and_mes_and_ano"
     t.index ["casal_id"], name: "index_lancamentos_on_casal_id"
+    t.index ["compra_cartao_id", "numero_parcela"], name: "index_lancamentos_on_compra_cartao_id_and_numero_parcela", unique: true, where: "(compra_cartao_id IS NOT NULL)"
+    t.index ["compra_cartao_id"], name: "index_lancamentos_on_compra_cartao_id"
     t.index ["familia_id"], name: "index_lancamentos_on_familia_id"
     t.index ["user_id"], name: "index_lancamentos_on_user_id"
   end

@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :lancamentos, foreign_key: :user_id
   has_many :receitas, foreign_key: :user_id
   has_many :investimentos, foreign_key: :user_id
+  has_many :cartoes, foreign_key: :user_id
+  has_many :compras_cartao, class_name: "CompraCartao", foreign_key: :user_id
 
   validates :nome, presence: true
   validates :email,
