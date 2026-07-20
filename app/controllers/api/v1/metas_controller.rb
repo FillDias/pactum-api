@@ -29,10 +29,6 @@ module Api
 
       private
 
-      def current_user
-        @current_user ||= User.find(@current_user_id)
-      end
-
       def meta_params
         params.permit(:titulo, :valor_alvo, :valor_atual, :prazo)
       end

@@ -34,9 +34,6 @@ module Api
 
       private
 
-      def current_user
-        @current_user ||= User.find(@current_user_id)
-      end
     end
   end
 end
