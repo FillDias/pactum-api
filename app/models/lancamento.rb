@@ -1,6 +1,7 @@
 class Lancamento < ApplicationRecord
   belongs_to :user
   belongs_to :familia, optional: true
+  belongs_to :compra_cartao, optional: true
 
   TIPOS = %w[despesa receita].freeze
   CATEGORIAS = %w[

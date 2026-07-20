@@ -7,6 +7,8 @@ class LancamentoService
       FamiliaService.membros_ids(familia)
     end
 
+    CompraCartaoService.materializar_parcelas_do_mes!(ids, mes, ano)
+
     scope = Lancamento.where(user_id: ids, mes: mes, ano: ano)
     scope = scope.where(categoria: categoria) if categoria.present?
     scope = scope.where(tipo: tipo) if tipo.present?

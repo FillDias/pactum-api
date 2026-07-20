@@ -40,10 +40,6 @@ module Api
 
       private
 
-      def current_user
-        @current_user ||= User.find(@current_user_id)
-      end
-
       def investimento_params
         params.permit(
           :nome, :tipo, :valor_investido, :quantidade,
