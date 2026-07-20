@@ -5,6 +5,8 @@ class Familia < ApplicationRecord
   has_many :lancamentos, foreign_key: :familia_id
   has_many :mensagens, foreign_key: :familia_id
   has_many :receitas, foreign_key: :familia_id
+  has_many :cartoes, foreign_key: :familia_id
+  has_many :compras_cartao, class_name: "CompraCartao", foreign_key: :familia_id
 
   validates :nome, presence: true
   validates :criado_por, presence: true
